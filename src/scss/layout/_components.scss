@@ -1,0 +1,596 @@
+// Main component
+.main {
+    position: relative;
+    background-color: #212121;
+    font-family: $primary;
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 50px 0;
+}
+
+// Movies
+.movies {
+    width: 100%;
+}
+
+//SearchArea 
+.search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    form {    
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 450px;   
+        overflow: hidden;          
+    } 
+    .overlay {
+        width: 0;
+        height: 40px;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $accent;
+        
+    }   
+    input {        
+        z-index: 10;
+        position: relative;
+        background: transparent;
+        border: none;
+        width: 100%;        
+        height: 40px;        
+        margin-right: 15px;
+        padding: 0 15px;
+        font-weight: 600;
+        color: $accent;        
+        border-bottom: 1px solid $light; 
+        transition: all .3s ease-in-out;
+        &::placeholder {
+            font-weight: 400;
+            color: $light;
+        }     
+        &:focus, &:hover {
+            border-bottom: 1px solid $accent;       
+        }
+    }
+}
+
+//Sorting
+.sort-box {
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    max-width: 140px;
+    background: transparent;
+    color: #c0c4c3;
+    border: none;    
+    outline: none;
+    &:focus {
+        outline: none;
+    }
+    option {
+        cursor: pointer;
+        outline: none;
+        background-color: #212121;        
+        color: #c0c4c3;
+    }
+}
+
+//MOVIES
+.movies {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__list {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;          
+    }
+}
+
+@keyframes opacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.movie {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;        
+    margin: 15px;
+    cursor: pointer;
+    animation: opacity 1s ease-in-out;
+    &:hover {
+        box-shadow: 0px 0px 20px 0px rgba($accent,0.75);  
+    }
+    &__pic {
+        width: 200px;
+        height: 300px;
+        object-fit:cover;
+    }
+    &__overlay {
+        display: flex;
+        align-items: flex-end;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+    &__info {   
+        width: 100%;
+        display: flex;
+        flex-direction: column;   
+        padding: 10px;
+        background-color: rgba($accent,0.8);
+        color: #ffffff;
+        position: absolute;
+        transition: all .3s ease-in-out;
+        bottom: -100px;  
+        opacity: 0;      
+    }
+    &__title {
+        text-align: left;
+        font-weight: 600;
+        font-size: 20px;
+    }
+    &__date {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    &:hover &__info {
+        opacity: 1;
+        bottom: 0;
+    }   
+    &__rating {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    } 
+}
+
+
+// Animated rating
+.circular-chart {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: rgba($accent,0.8);
+}
+
+.percentage {
+    text-anchor: middle;
+    fill: #ffffff;  
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.circle-bg {
+    fill: transparent;
+    stroke: transparent;
+    stroke-width: 0.5;    
+}
+  
+.circle {
+    fill: transparent;
+    stroke: #ffffff;    
+    stroke-width: 3;    
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+
+// Animated rating in the Watchlist Items (reused)
+.circular-chart_watchlist {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: rgba($dark,0.8);
+}
+
+.seen-item .circular-chart_watchlist {
+    background-color: rgba($accent,0.4);
+}
+
+.percentage_watchlist { 
+    font-size: .7rem;
+    font-weight: 400;
+}
+  
+.circle_watchlist {   
+    stroke-width: 2;
+}
+
+@keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+}
+
+//Pagination
+.pages {
+    display: flex;
+    margin-top: 20px;
+    &__number {
+        font-family: $secondary;
+        font-size: 16px;
+        button {
+            cursor: pointer;
+            margin: 0 5px;
+            padding: 5px 10px;
+            color: $dark;
+            background-color: #ffffff;
+            border-radius: 2px;
+            border: none;
+            &:hover {
+                color: #ffffff;
+                background-color: $accent;
+                box-shadow: 0px 0px 7px 0px rgba($accent,0.75);  
+            }
+        }
+    }
+    &__arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+            display: flex;
+            background: transparent;
+            padding: 0;            
+            color: #ffffff;
+            &:hover {
+                color: $accent;
+                background: transparent;
+                box-shadow: unset;
+            }
+        }
+        svg {
+            height: 24px;
+        }
+    }
+}
+
+.activePage button {
+    color: #ffffff;
+    background-color: $accent;
+    box-shadow: 0px 0px 7px 0px rgba($accent,0.75);
+}
+
+//Movie details 
+.movie-d {
+    display: flex;
+    justify-content: center;
+    position: absolute;        
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(#030303,.7) 15%,rgba(#030303,.2) 40%, rgba(#030303,.9) 90%);
+    &__overlay {
+        padding: 50px 15px;
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+    } 
+    &__info {
+        position: relative;
+        margin-bottom: 15px;
+    }
+    &__visual {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;        
+    }
+    &__vid {
+        width: 90%;
+        margin-left: 30px;
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.backdrop {        
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;        
+}
+
+// WATCHLIST ------------------------------------------------------------------------------------------------------------------------------------------------------
+.watchlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    &__title {
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    &__wrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    &__empty {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 40px;
+        color: $accent;
+    }
+    //Watchlist Input 
+    &-input {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 450px;
+        &__control {
+            display: flex;        
+            width: 100%;
+        }
+        &__label {
+            align-self: flex-start;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }       
+    }
+}
+
+#watchlist-suggest-input {
+    background: transparent;
+    border: none;
+    width: 100%;        
+    height: 40px;    
+    padding: 0 15px;
+    font-weight: 600;
+    color: $accent;        
+    border-bottom: 1px solid $light; 
+    transition: all .3s ease-in-out;
+    &:focus, &:hover {
+        border-bottom: 1px solid $accent;       
+    }
+}
+
+#watchlist-suggest-input::placeholder{
+    font-weight: 400;
+    color:$light;
+}
+
+//List items for Watchlist and Already Seen Lists
+.toWatch {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.seen {
+    padding: 40px 0;
+    width: 100%;
+    display: flex;    
+    flex-direction: column;
+    align-items: center;
+    &__title {
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    &__list {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.list-item {
+    cursor: pointer;
+    animation: opacity 1s ease-in-out;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px;
+    &:focus {
+        outline: none;
+    }
+    &__pic {
+        position: relative;
+        overflow: hidden;
+    }
+    &__text {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: rgba($dark,0.8);
+        position: absolute;
+        bottom: 0;
+        h3 {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        span {
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+    &__btns {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px;
+        button {
+            cursor: pointer;
+            background: transparent;
+            color: #ffffff;
+            border: none;
+            padding: 10px 0;
+            margin: 0 5px;
+        }
+    }
+    &__detail {
+        cursor: pointer;
+        position: absolute;
+        top: 80%;
+        opacity: 0;
+        left: 23%;
+        width: 100px;
+        height: 40px;        
+        background: rgba($dark,0.8);
+        transition: all .3s ease-in-out;
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                background-color: rgba($accent,0.8);
+                transition: width .4s ease-in-out;
+            }
+            &:hover::before {
+                width: 100%;
+            }
+        }
+    }
+    &:hover &__detail {
+        top: 40%;
+        opacity: 1;
+    }
+}
+
+.list-item.seen-item {
+    max-width: 180px;
+    img {
+        opacity: .6;
+    }
+    .list-item__text {
+        background-color: rgba($accent,0.4);
+    }   
+}
+
+// SUGGESTIONS ---------------------------------------------------------------------------------------------------------------------------------------------------
+.suggestion {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-family: $secondary;
+    font-size: 14px;    
+    &__pic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;        
+        img {
+            object-fit: cover;
+            height: auto;
+            max-width: 33px;
+        }
+    }
+    &__content {
+        padding: 3px 0;
+    }
+    &__title {
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+.react-autosuggest__container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;    
+}
+
+.react-autosuggest__suggestions-container {
+    display: none;
+    color:#ffffff;
+}
+
+.react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    top: 45px;
+    border: none;
+    background-color: rgba(#030303,.7);      
+    z-index: 2;
+    width: 100%;
+}
+
+.no-suggestions{
+    cursor: pointer;
+    display: flex;
+    position: absolute;
+    top: 69px;
+    background-color: rgba(#030303,.7); 
+    padding: 10px;
+    width: 100%;
+    border: none;
+    color:#ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    &:hover {
+        background-color: rgba($accent,0.6);
+    }
+}
+
+.react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 0px 15px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+    background-color: rgba($accent,0.6);
+}
+
+.react-autosuggest__suggestion-match {
+    color: red;
+    font-weight: bold;
+}

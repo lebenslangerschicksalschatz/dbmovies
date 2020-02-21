@@ -8,7 +8,9 @@
 # testing
 /coverage
 
-# production
+# for pushing to the code branch
+/config
+/scripts
 /build
 
 # misc

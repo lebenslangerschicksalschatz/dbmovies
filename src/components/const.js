@@ -1,0 +1,17 @@
+export const URL_LIST = 'https://api.themoviedb.org/3/discover/movie';
+export const URL_SEARCH = 'https://api.themoviedb.org/3/search/movie';
+export const URL_DETAIL = 'https://api.themoviedb.org/3/movie/';
+export const URL_PERSON = 'https://api.themoviedb.org/3/person/';
+export const URL_IMG = 'https://image.tmdb.org/t/p/';
+export const DEFAULT_POSTER = 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-300x450.jpg';
+export const URL_BACKDROP = 'https://image.tmdb.org/t/p/original';
+export const URL_YOUTUBE = 'https://www.youtube.com/embed/';
+export const URL_CAST = '/casts';
+export const URL_VIDEO = '/videos';
+export const IMG_SIZE_XSMALL = 'w45/';
+export const IMG_SIZE_SMALL = 'w185/';
+export const IMG_SIZE_LARGE = 'w342/';
+export const CAST_MAX_NUM = 5;
+export const API_KEY = '?api_key=090028bc6de357f7dbfd5aeebae43718';
+export const STORAGE_LIST = 'list';
+export const STORAGE_NEXTID = 'nextid';

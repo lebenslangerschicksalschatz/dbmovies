@@ -1,0 +1,72 @@
+.header {
+    position: relative;
+    z-index: 100;
+    width: 100%;
+    font-family: $primary;
+    color: #ffffff;
+    background-color: $dark;
+    box-shadow: 0px 0px 10px 0px rgba(#ffffff,0.7);
+    .wrapper {
+        padding: 15px;
+        justify-content: space-between;
+    }
+    &__logo img {
+        height: 70px;
+        object-fit: contain;
+    }
+}
+
+.nav {    
+    width: 100%;
+    max-width: 600px;
+    &__list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    &__item a {
+        position: relative;
+        height: 50px;
+        padding: 0 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+            &::before {
+                content: "";
+                background-color: $accent;
+                position: absolute;
+                display: block;
+                right: 0;
+                bottom: 0;
+                height: 1px;
+                width: 0;
+                transition: width .5s ease-in-out;
+            }
+            &::after {
+                content: "";
+                background-color: $accent;
+                position: absolute;
+                display: block;
+                left: 0;
+                top: 0;
+                height: 1px;
+                width: 0;
+                transition: width .5s ease-in-out;
+            }
+            &:hover::after, &:hover::before {
+                width: 80%;
+                box-shadow: 1px 1px 8px 0px rgba($accent,0.7);                
+            }
+    }
+}
+
+.nav__item .active::after, .nav__item .active::before {
+    width: 80%;
+    box-shadow: 1px 1px 8px 0px rgba($accent,0.7);
+}
+
+.nav__item .active {
+    font-weight: 600;
+    color: $accent;
+}
