@@ -18,8 +18,7 @@ class Movies extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({searchTerm: event.target.value})
-    
+    this.setState({searchTerm: event.target.value})    
   }
   
 
@@ -56,10 +55,10 @@ class Movies extends React.Component {
 
     const sortedMovies = this.state.movies.sort((a,b) => {
       if(this.state.sort === "Newest") {
-        return parseInt(b.release_date.substring(0,4)) - parseInt(a.release_date.substring(0,4))
+        return parseInt(b.release_date) - parseInt(a.release_date)
       }
       else if(this.state.sort === "Oldest") {
-        return parseInt(a.release_date.substring(0,4)) - parseInt(b.release_date.substring(0,4))
+        return parseInt(a.release_date) - parseInt(b.release_date)
       }
       else if(this.state.sort === "RatingAsc") {
         return a.vote_average - b.vote_average

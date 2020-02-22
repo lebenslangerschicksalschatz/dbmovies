@@ -24,7 +24,7 @@ class WatchlistContainer extends Component {
     getLists() {
         const listItems = this.props.listItems;
         const upNextItems = [];
-        const completedItems = [];
+        const completedItems = [];        
   
         listItems.forEach((item) => {
             let listItem = (
@@ -44,13 +44,13 @@ class WatchlistContainer extends Component {
             }
         });
   
-        return [upNextItems, completedItems];
-    }
+        return [upNextItems, completedItems];        
+    }    
 
     render() {
         const [upNextItems, completedItems] = this.getLists();
         let upNextDisplay;
-
+        
         if (upNextItems.length > 0) {
             upNextDisplay = <div className="toWatch">{upNextItems}</div>;
         } else {

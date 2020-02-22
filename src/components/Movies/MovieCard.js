@@ -2,9 +2,6 @@ import React from 'react';
 import { URL_IMG, IMG_SIZE_SMALL, DEFAULT_POSTER } from "../const"
 
 const MovieCard = (props) => {
-    if (props.release_date === undefined) {
-        return ""
-    }
     return (
         <div className="movie">
             {
@@ -36,7 +33,7 @@ const MovieCard = (props) => {
                 <div className="movie__info">
                     <h3 className="movie__title">{props.title}</h3>
                     {
-                        props.release_date === ""
+                        props.release_date === undefined
                         ? ""
                         : <div className="movie__date">
                             <span>Release Date: {props.release_date.substring(0,4)}</span>                                                

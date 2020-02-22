@@ -6,7 +6,6 @@ import { STORAGE_LIST, STORAGE_NEXTID } from '../const';
 class Watchlist extends Component {
   constructor(props){
     super(props);
-    this.storageError = false;
     this.canAccessLocalStorage = false;
     this.canAccessLocalStorage = this.checkLocalStorage();
     this.state = {
@@ -28,45 +27,25 @@ class Watchlist extends Component {
   }
 
   getWatchlistStorage() {
-    if(this.canAccessLocalStorage){
-      try {
+    if(this.canAccessLocalStorage) {
         return JSON.parse(localStorage.getItem(STORAGE_LIST)) || [];
-      }
-      catch (e){
-        this.storageError = true;
-        return [];
-      }
-    }else{
-      this.storageError = true;
+    } else {
       return [];
     }
   }
 
   getNextIDStorage() {
-    if(this.canAccessLocalStorage){
-      try{
-        return parseInt(localStorage.getItem(STORAGE_NEXTID), 10) || 0;
-      }
-      catch (e){
-        this.storageError = true;
-        return 0;
-      }
-    }else{
-      this.storageError = true;
+    if(this.canAccessLocalStorage) {
+      return parseInt(localStorage.getItem(STORAGE_NEXTID), 10) || 0;
+    } else {
       return 0;
     }
   }
 
-  updateStorage(watchlist, nextID){
-    if(this.canAccessLocalStorage){
-      try {
+  updateStorage(watchlist, nextID) {
+    if(this.canAccessLocalStorage) {
         localStorage.setItem(STORAGE_LIST, JSON.stringify(watchlist));
-        localStorage.setItem(STORAGE_NEXTID, nextID);
-      } catch (e) {
-        this.storageError = true;
-      }
-    }else{
-      this.storageError = true;
+        localStorage.setItem(STORAGE_NEXTID, nextID); 
     }
   }
 
@@ -107,10 +86,11 @@ class Watchlist extends Component {
       watchlistArray: updatedList
     });
     this.updateStorage(updatedList, this.state.nextID);
-  }
+  }  
 
   render() {
     const watchlistArray = this.state.watchlistArray;
+    console.log(watchlistArray);
 
     return (
       <div className="watchlist">
@@ -118,16 +98,16 @@ class Watchlist extends Component {
         <WatchlistInput 
           addWatchlistItem={(watchlistItem) => this.addWatchlistItem(watchlistItem)}
         />
-        { this.storageError && (
-            <div id="storageError">
-              Unable to access LocalStorage.
-            </div>
-          ) }
-          <WatchlistContainer
+        { this.canAccessLocalStorage 
+          ? <WatchlistContainer
             listItems={watchlistArray}
             removeWatchlistItem={(id) => this.removeWatchlistItem(id)}
             updateWatchlistItemStatus={(id, status) => this.updateWatchlistItemStatus(id, status)}
-          />                
+          />
+          : <div id="storageError">
+              Unable to access LocalStorage.
+            </div> 
+        }              
       </div>
     );
   }

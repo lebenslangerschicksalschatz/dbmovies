@@ -9,8 +9,6 @@
 /coverage
 
 # for pushing to the code branch
-/config
-/scripts
 /build
 
 # misc

@@ -18,7 +18,7 @@ class App extends Component {
         <HashRouter>
           <header className="header">
               <div className="wrapper">
-                  <div className="header__logo"><NavLink exact to="/"><img src="./main_logo.png" alt="Main Logo"/></NavLink></div>
+                  <div className="header__logo"><NavLink exact to="/"><img src="./img/main_logo.png" alt="Main Logo"/></NavLink></div>
                   <nav className="nav">
                       <ul className="nav__list">
                           <li className="nav__item"><NavLink exact to="/">Home</NavLink></li>

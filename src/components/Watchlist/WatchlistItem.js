@@ -41,7 +41,7 @@ class WatchlistItem extends Component {
                         <div className="list-item__text">
                             <h3 className="list-item__title">{this.props.watchlistItem.title}</h3>
                             {
-                                this.props.watchlistItem !== "" 
+                                this.props.watchlistItem.release_date !== undefined
                                 ? <span className="list-item__date">{this.props.watchlistItem.release_date.substring(0,4)}</span>
                                 : ""
                             }

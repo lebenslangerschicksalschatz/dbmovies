@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {URL_DETAIL, URL_VIDEO, URL_YOUTUBE, API_KEY, URL_IMG, IMG_SIZE_LARGE, URL_BACKDROP} from "../const"
+import {URL_DETAIL, URL_VIDEO, URL_YOUTUBE, API_KEY, URL_IMG, IMG_SIZE_LARGE, URL_BACKDROP, DEFAULT_BACKDROP, STORAGE_LIST, STORAGE_NEXTID } from "../const"
+
+function checkLocalStorage() {
+    try {
+        localStorage.setItem("watchlist_test", "test");
+        localStorage.removeItem("watchlist_test");
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+const canAccessLocalStorage = checkLocalStorage();
 
 const MovieDetail = ({ match }) => {
     useEffect (() => {
@@ -8,25 +21,30 @@ const MovieDetail = ({ match }) => {
     }, []);
 
     const [item, setItem] = useState({});
+    const [trailer, setTrailer] = useState({});
+    const [isLoading, setIsLoading] = useState({isLoading:false});
 
     const fetchItem = async () => {
         let url = URL_DETAIL + match.params.id + API_KEY
+        setIsLoading(true);
         const fetchItem = await fetch(`${url}`);
         const item = await fetchItem.json();
         setItem(item);
         console.log(item);
+        setIsLoading(false);
     }
 
-    const [trailer, setTrailer] = useState({});
     const fetchTrailer = async () => {
         let url = URL_DETAIL + match.params.id + URL_VIDEO + API_KEY
+        setIsLoading(true);
         const fetchTrailer = await fetch(`${url}`);
         const trailer = await fetchTrailer.json();
-        if (trailer.results <= 1) {
+        if (trailer.results < 1) {
             return false
         } else {
             setTrailer(trailer);
         }
+        setIsLoading(false);
     }
 
     function isEmpty(obj) {
@@ -37,31 +55,109 @@ const MovieDetail = ({ match }) => {
         return true;
     }
 
-    let trailerId;
+    //LOCAL STORAGE      
+    const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
+    const [nextID, setNextID] = useState( getNextIDStorage() );    
 
-    if (isEmpty(trailer)) {
-        return (<h2>Sorry, no info availble about this one =*(</h2>)
+    function getWatchlistStorage() {
+        if(canAccessLocalStorage){
+            return JSON.parse(localStorage.getItem(STORAGE_LIST)) || [];
+        } else {            
+            return [];
+        }
+    }
+    
+    function getNextIDStorage() {
+        if (canAccessLocalStorage) {
+            return parseInt(localStorage.getItem(STORAGE_NEXTID), 10) || 0;
+        } else {            
+            return 0;
+        }
+    }
+
+    function updateStorage(watchlist, nextID){
+        if (canAccessLocalStorage) {
+            localStorage.setItem(STORAGE_LIST, JSON.stringify(watchlist));
+            localStorage.setItem(STORAGE_NEXTID, nextID);
+        }
+    }
+
+    function checkDuplicateID(id){
+        return watchlistArray.some((item) => item.watchlistItem.id === id);     
+    }
+
+    function addWatchlistItem(watchlistItem) {
+        let updatedID = Number(nextID) + 1;
+        if (!checkDuplicateID(watchlistItem.id)) {
+            let newItem = [{
+                id: updatedID, 
+                watchlistItem: watchlistItem
+            }];
+          let updatedList = newItem.concat(watchlistArray);          
+          setWatchlistArray(updatedList);
+          setNextID(updatedID);
+          updateStorage(updatedList, updatedID);
+        }
+    }
+
+    function removeWatchlistItem(id) {
+        let updatedList = watchlistArray.filter((item) => item.watchlistItem.id !== id);        
+        setWatchlistArray(updatedList);        
+        updateStorage(updatedList, nextID);
+
+        console.log(id);
+    }
+
+    function updateWatchlistItemStatus(id, status){
+        watchlistArray.slice(0);
+        let updatedList = watchlistArray.map((item) => item.id !== id ? item : {...item, completed: status});
+        setWatchlistArray(updatedList);
+        updateStorage(updatedList, nextID);
+    }
+
+    function handleAddSeen(e, id) {
+        addWatchlistItem(item);
+        updateWatchlistItemStatus(id, 1);
+    }
+
+    function handleSeen(e, id) {
+        updateWatchlistItemStatus(id, 1);
+    }
+
+    function handleNotSeen(e, id) {
+        updateWatchlistItemStatus(id, 0);
+    }
+
+    function handleRemove(e, id) {
+        removeWatchlistItem(id);
+    }
+
+    console.log(watchlistArray);
+
+    // RENDERING
+    if (!canAccessLocalStorage) {
+        return (<div id="storageError">
+              Unable to access LocalStorage.
+        </div>)
+    } else if (isLoading) {
+        return (<h1>Loading..</h1>)
+
     } else {
-        trailerId = trailer.results[0].key
-    } 
-
-    if (isEmpty(item) || isEmpty(trailer)) {
-        return (
-            <h1>is loading</h1>
-        )
-
-    } else {
-        return (
+        return (            
             <>
-            <img className="backdrop" src={URL_BACKDROP+item.backdrop_path} alt="Background Image"/>              
+            {
+                item.backdrop_path === null 
+                ?<img className="backdrop" src={DEFAULT_BACKDROP} alt="Background"/> 
+                :<img className="backdrop" src={URL_BACKDROP+item.backdrop_path} alt="Background"/> 
+            }                         
             <div className="movie-d">  
                 <div className="movie-d__overlay">
                     <div className="movie-d__info">
-                        <h1>{item.title}</h1>
+                        <h3 className="movie-d__title">{item.title}</h3>
                         {             
-                            item.genres.map((genre) => {
+                            item.genres && item.genres.map((genre) => {
                                 return (
-                                    <span key={genre.name}>{genre.name}</span>
+                                    <span className="movie-d__genre" key={genre.name}>#{genre.name}</span>
                                 )
                             })
                         }
@@ -69,13 +165,13 @@ const MovieDetail = ({ match }) => {
                             item.vote_average === 0
                             ? ""
                             : <div className="movie__rating movie__rating_detail">
-                                <svg viewBox="0 0 36 36" className="circular-chart">                            
+                                <svg viewBox="0 0 36 36" className="circular-chart circular-chart_detail">                            
                                     <path className="circle-bg"
                                     d="M18 2.0845
                                         a 15.9155 15.9155 0 0 1 0 31.831
                                         a 15.9155 15.9155 0 0 1 0 -31.831"
                                     />
-                                    <path className="circle"
+                                    <path className="circle circle_detail"
                                     strokeDasharray="78, 100"
                                     d="M18 2.0845
                                         a 15.9155 15.9155 0 0 1 0 31.831
@@ -86,17 +182,32 @@ const MovieDetail = ({ match }) => {
                             </div>
                         }
                     </div>
-                    <div className="movie-d__visual">
+                    <div className="movie-d__content">
                         <div className="movie-d__pic">
                         {
                             item.poster_path === null 
                             ? <img src={`https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-300x450.jpg`} alt="Movie Poster" /> 
                             : <img src={`${URL_IMG+IMG_SIZE_LARGE+item.poster_path}`} alt="Movie Poster" />
                         }
-                        </div>
-                        <div className="movie-d__vid">
-                            <iframe title={URL_YOUTUBE + trailerId} src={URL_YOUTUBE + trailerId}/>
-                        </div>
+                        </div>                        
+                        {
+                            isEmpty(trailer)
+                            ? <div>No Trailer</div> 
+                            : <div className="movie-d__vid">
+                                <iframe title={URL_YOUTUBE + trailer.results[0].key} src={URL_YOUTUBE + trailer.results[0].key}/>
+                            </div>
+                        }
+                    </div>
+                    <div className="movie-d__btns">
+                        {
+                            checkDuplicateID(item.id)
+                            ? (<button id="remove" onClick={(e) => removeWatchlistItem(item.id)}>
+                                In the Watchlist
+                            </button>)
+                            : (<button id="toWatchlist" onClick={(e) => addWatchlistItem(item)}>
+                                Add to Watchlist
+                            </button>)                            
+                        }
                     </div>
                 </div>              
             </div>

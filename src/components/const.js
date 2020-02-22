@@ -5,6 +5,7 @@ export const URL_PERSON = 'https://api.themoviedb.org/3/person/';
 export const URL_IMG = 'https://image.tmdb.org/t/p/';
 export const DEFAULT_POSTER = 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-300x450.jpg';
 export const URL_BACKDROP = 'https://image.tmdb.org/t/p/original';
+export const DEFAULT_BACKDROP = '/img/default_backdrop.jpg'
 export const URL_YOUTUBE = 'https://www.youtube.com/embed/';
 export const URL_CAST = '/casts';
 export const URL_VIDEO = '/videos';
