@@ -59,7 +59,8 @@ class Watchlist extends Component {
     if(!this.checkDuplicateID(watchlistItem.id)){
       let newItem = [{
         id:updatedID, 
-        watchlistItem: watchlistItem
+        watchlistItem: watchlistItem,
+        completed: false
       }];
       let updatedList = newItem.concat(this.state.watchlistArray);
       this.setState({
@@ -78,7 +79,7 @@ class Watchlist extends Component {
     this.updateStorage(updatedList, this.state.nextID);
   }
 
-  updateWatchlistItemStatus(id,status){
+  updateWatchlistItemStatus(id, status){
     //clone the array and then map the cloned array to set completed on the matching ID
     const watchlistArray = this.state.watchlistArray.slice(0);
     let updatedList = watchlistArray.map((item) => item.id !== id ? item : {...item, completed:status});

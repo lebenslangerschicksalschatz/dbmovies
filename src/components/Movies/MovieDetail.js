@@ -86,12 +86,18 @@ const MovieDetail = ({ match }) => {
         return watchlistArray.some((item) => item.watchlistItem.id === id);     
     }
 
+    function checkIfSeen(id){
+        let foundList = watchlistArray.filter(item => item.watchlistItem.id === id);
+        return foundList.some((item) => item.completed === 1)
+    }
+
     function addWatchlistItem(watchlistItem) {
         let updatedID = Number(nextID) + 1;
         if (!checkDuplicateID(watchlistItem.id)) {
             let newItem = [{
                 id: updatedID, 
-                watchlistItem: watchlistItem
+                watchlistItem: watchlistItem,
+                completed: false
             }];
           let updatedList = newItem.concat(watchlistArray);          
           setWatchlistArray(updatedList);
@@ -100,12 +106,29 @@ const MovieDetail = ({ match }) => {
         }
     }
 
+    function addSeenItem(watchlistItem) {  
+        let updatedID = Number(nextID) + 1;      
+        if (!checkDuplicateID(watchlistItem.id)) {
+
+            let newItem = [{
+                id: updatedID, 
+                watchlistItem: watchlistItem,
+                completed: true
+            }];
+    
+            let updatedList = newItem.concat(watchlistArray);          
+            setWatchlistArray(updatedList);
+            setNextID(updatedID);
+            updateStorage(updatedList, updatedID);
+        } else if (!checkIfSeen(watchlistItem.id)) {
+            updateWatchlistItemStatus(watchlistItem.id, 1);
+        }
+    }
+
     function removeWatchlistItem(id) {
         let updatedList = watchlistArray.filter((item) => item.watchlistItem.id !== id);        
         setWatchlistArray(updatedList);        
         updateStorage(updatedList, nextID);
-
-        console.log(id);
     }
 
     function updateWatchlistItemStatus(id, status){
@@ -113,26 +136,18 @@ const MovieDetail = ({ match }) => {
         let updatedList = watchlistArray.map((item) => item.id !== id ? item : {...item, completed: status});
         setWatchlistArray(updatedList);
         updateStorage(updatedList, nextID);
+        console.log(updatedList);
     }
 
-    function handleAddSeen(e, id) {
-        addWatchlistItem(item);
-        updateWatchlistItemStatus(id, 1);
+    function handleReset(e, id){
+        updateWatchlistItemStatus(id, false);
     }
 
-    function handleSeen(e, id) {
-        updateWatchlistItemStatus(id, 1);
+    function handleSeen(e, id){
+        updateWatchlistItemStatus(id, true);
     }
 
-    function handleNotSeen(e, id) {
-        updateWatchlistItemStatus(id, 0);
-    }
-
-    function handleRemove(e, id) {
-        removeWatchlistItem(id);
-    }
-
-    console.log(watchlistArray);
+    /* console.log(watchlistArray); */
 
     // RENDERING
     if (!canAccessLocalStorage) {
@@ -198,7 +213,7 @@ const MovieDetail = ({ match }) => {
                             </div>
                         }
                     </div>
-                    <div className="movie-d__btns">
+                    <div className="movie-d__btns">                        
                         {
                             checkDuplicateID(item.id)
                             ? (<button id="remove" onClick={(e) => removeWatchlistItem(item.id)}>
@@ -207,6 +222,15 @@ const MovieDetail = ({ match }) => {
                             : (<button id="toWatchlist" onClick={(e) => addWatchlistItem(item)}>
                                 Add to Watchlist
                             </button>)                            
+                        }
+                        {
+                            checkIfSeen(item.id)
+                            ? (<button id="reset" onClick={(e) => handleReset(e,item.id)}>
+                                Already Seen
+                            </button>)
+                            : (<button id="alreadySeen" onClick={(e) => handleSeen(e,item.id)}>
+                                Haven't Seen
+                            </button>)
                         }
                     </div>
                 </div>              

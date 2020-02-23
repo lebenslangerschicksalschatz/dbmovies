@@ -10,11 +10,11 @@ class WatchlistContainer extends Component {
     }
 
     handleComplete(e, id){
-        this.props.updateWatchlistItemStatus(id, 1);
+        this.props.updateWatchlistItemStatus(id, true);
     }
 
     handleReset(e, id){
-        this.props.updateWatchlistItemStatus(id, 0);
+        this.props.updateWatchlistItemStatus(id, false);
     }
 
     handleClose(e, id) {
