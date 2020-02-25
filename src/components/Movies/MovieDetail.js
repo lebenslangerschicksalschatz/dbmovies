@@ -97,7 +97,8 @@ const MovieDetail = ({ match }) => {
             let newItem = [{
                 id: updatedID, 
                 watchlistItem: watchlistItem,
-                completed: false
+                completed: false,
+                rating: 0
             }];
           let updatedList = newItem.concat(watchlistArray);          
           setWatchlistArray(updatedList);
@@ -114,7 +115,8 @@ const MovieDetail = ({ match }) => {
             let newItem = [{
                 id: updatedID, 
                 watchlistItem: watchlistItem,
-                completed: true
+                completed: true,
+                rating: 0
             }];
     
             let updatedList = newItem.concat(watchlistArray);          

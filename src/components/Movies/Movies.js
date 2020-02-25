@@ -1,5 +1,5 @@
 import React from "react";
-import { URL_SEARCH, API_KEY, URL_POPULAR } from "../const"
+import { URL_SEARCH, API_KEY } from "../const"
 import SearchArea from "../SearchArea"
 import MovieList from "./MovieList"
 import Pagination from "./Pagination"

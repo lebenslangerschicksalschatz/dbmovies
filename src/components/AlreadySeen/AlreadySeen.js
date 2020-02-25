@@ -97,7 +97,7 @@ const AlreadySeen = ({}) => {
       <div className="seenlist">
         <h2 className="seenlist__title">ALREADY SEEN LIST</h2> 
         <div className="seenlist__input">
-          <label for="seenlist-input">Search for a particular movie:</label>
+          <label htmlFor="seenlist-input">Search for a particular movie:</label>
           <input 
             id="seenlist-input"
             type="text" 
@@ -164,9 +164,13 @@ const AlreadySeen = ({}) => {
                     </div>
                   </div>
                   <div className="seenlist-item__right">
-                  <StarRating movieID={item.watchlistItem.id} totalStars={10}/>
+                  <StarRating 
+                    seenlistArray={seenlistArray} 
+                    movieID={item.watchlistItem.id}
+                    rating={item.rating}
+                    totalStars={10}/>
                   <UserNotes
-                    text={storedHeading}
+                    text={storedHeading}                    
                     onSetText={text => setStoredHeading(text)}
                   />
                   </div>

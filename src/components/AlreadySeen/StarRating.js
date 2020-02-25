@@ -26,12 +26,11 @@ const Star = ({ selected = false, onClick = f => f }) => {
 
 };
 
-const StarRating = ({ totalStars, movieID }) => {
-
-    const [starsSelected, selectStar] = useState(0);
+const StarRating = ({ totalStars, movieID, rating }) => {    
 
     const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
     const [nextID, setNextID] = useState( getNextIDStorage() ); 
+    const [starsSelected, selectStar] = useState(rating);
 
     function getWatchlistStorage() {
         if(canAccessLocalStorage){
@@ -56,27 +55,14 @@ const StarRating = ({ totalStars, movieID }) => {
         }
     }
 
-    function getSeenlist() {
-        const seenlist = [];
-        watchlistArray.forEach((item) => {
-          if (item.completed) {
-            seenlist.push(item);
-          }
-        });
-    
-        return seenlist;
-    }
-
-    const seenlistArray = getSeenlist(); 
-
     function updateWatchlistItemRating(id, rating){
-        let updatedList = seenlistArray.map((item) => item.watchlistItem.id !== id ? item : {...item, rating: rating});
+        let updatedList = watchlistArray.map((item) => item.watchlistItem.id !== id ? item : {...item, rating: rating});
         setWatchlistArray(updatedList);
         updateStorage(updatedList, nextID);
     }
-    
-    console.log(seenlistArray.rating);
-    
+
+    console.log(rating);
+
     return (
     
       <div className="star-rating">
@@ -100,8 +86,6 @@ const StarRating = ({ totalStars, movieID }) => {
       </div>
         
     );
-
-
 };
 
 export default StarRating;

@@ -60,7 +60,8 @@ class Watchlist extends Component {
       let newItem = [{
         id:updatedID, 
         watchlistItem: watchlistItem,
-        completed: false
+        completed: false,
+        rating: 0
       }];
       let updatedList = newItem.concat(this.state.watchlistArray);
       this.setState({
