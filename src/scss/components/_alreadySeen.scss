@@ -1,0 +1,272 @@
+// Animated rating in the Seenlist Items (reused)
+.circular-chart.circular-chart_seenlist {
+    background-color: rgba($accent,0.8);
+}
+
+.percentage.percentage_seenlist { 
+    font-size: .7rem;
+    font-weight: 400;
+}
+
+.circle.circle_seenlist {   
+    stroke-width: 2;
+}
+
+//ALREADY SEEN PAGE
+.seenlist {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: opacity 1s ease-in-out;
+    &__title {
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    &__input {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 450px;
+        label {
+            align-self: flex-start;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            height: 40px;
+            padding: 0 15px;
+            font-weight: 600;
+            color: #01d277;
+            border-bottom: 1px solid #c0c4c3;
+            transition: all .3s ease-in-out;
+            &:hover {
+                border-bottom: 1px solid #01d277;
+            }
+            &::placeholder {
+                font-weight: 400;
+                color: $light;
+            } 
+        }
+    }
+    &__items {
+        margin-top: 40px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}
+
+.seenlist-item {
+    animation: opacity 1s ease-in-out;
+    display: flex;
+    width: 47%;
+    margin: 10px;
+    &__left {
+        width: 50%;
+    }
+    &__right {
+        width: 50%;
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    &__pic {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        &:hover .seenlist-item__detail {
+            top: 40%;
+            opacity: 1;
+        }
+    }
+    &__text {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: rgba($accent,0.75);
+        position: absolute;
+        bottom: 0;
+    }
+    &__title {
+        font-weight: 600;
+        font-size: 14px;
+    }
+    &__date {
+        font-weight: 400;
+        font-size: 14px;
+    }
+    &__detail {
+        cursor: pointer;
+        position: absolute;
+        top: 80%;
+        opacity: 0;
+        width: 100px;
+        height: 40px;        
+        background: rgba($dark,0.8);
+        transition: all .3s ease-in-out;
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                background-color: rgba($accent,0.8);
+                transition: width .4s ease-in-out;
+            }
+            &:hover::before {
+                width: 100%;
+            }
+        }
+    }    
+    &__btns {
+        display: flex;
+        justify-content: space-between;
+        button {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            margin: 10px 10px 0 10px;
+            &:hover {
+                animation: pulse 1s infinite;
+            } 
+        }
+        .deleteItem {
+            color: $accent;
+            height: 25px;
+            width: 25px;
+            &:hover {
+                color: #d4655d;
+            }
+        }
+        .resetItem {
+            color: $accent;
+            height: 35px;
+            width: 35px;
+            &:hover {
+                color: $light;
+            }
+        }
+    }
+}
+
+//STAR RATING
+.star-rating {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &__title {
+        display: flex;
+        width: 100%;
+        font-weight: 400;
+        color: #ffffff;
+        font-size: 18px;
+        margin-bottom: 20px;
+        span {
+            font-size: 16px;
+            margin-left: 15px;
+        }
+    }
+    &__stars {
+        width: 100%;
+        display: flex;
+    }
+}
+  
+.star {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    color: $light;
+    margin: 0 2px;
+}
+
+.star.selected {
+    color: $accent;
+}
+
+//EDITABLE TEXT
+.user-note {
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    &__copy {
+        width: 100%;
+        min-height: 50px;
+        line-height: 24px;
+    }
+    &__copy_active, &__input_active {
+        color: #ffffff;
+        text-align: inherit;
+        padding: 0;
+        background: transparent;
+        border: none;
+        outline: none;  
+    }
+    &__copy_active {
+        cursor: pointer;
+    }
+    &__input_active {
+        overflow: hidden;
+        text-align: left;
+        width: 100%;
+        min-height: 150px;        
+        display: flex;
+        resize: vertical;
+    }
+    &__copy_hidden, &__input_hidden {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 799px) {
+    .seenlist__items {
+        justify-content: center;
+    }
+    .seenlist-item {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .seenlist-item {
+        flex-wrap: wrap;
+        &__left, &__right {
+            width: 100%;
+        }
+        &__right {
+            margin: 20px 0;
+        }
+    }
+}

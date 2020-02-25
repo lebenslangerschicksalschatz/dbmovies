@@ -1,0 +1,246 @@
+// Main component
+.main {
+    position: relative;
+    background-color: #212121;
+    font-family: $primary;
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 50px 0;
+}
+
+//SearchArea 
+.search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    form {    
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 450px;   
+        overflow: hidden;          
+    } 
+    .overlay {
+        width: 0;
+        height: 40px;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $accent;
+        
+    }   
+    input {        
+        z-index: 10;
+        position: relative;
+        background: transparent;
+        border: none;
+        width: 100%;        
+        height: 40px;        
+        margin-right: 15px;
+        padding: 0 15px;
+        font-weight: 600;
+        color: $accent;        
+        border-bottom: 1px solid $light; 
+        transition: all .3s ease-in-out;
+        &::placeholder {
+            font-weight: 400;
+            color: $light;
+        }     
+        &:focus, &:hover {
+            border-bottom: 1px solid $accent;       
+        }
+    }
+}
+
+//Sorting
+.sort-box {
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    max-width: 140px;
+    background: transparent;
+    color: #c0c4c3;
+    border: none;    
+    outline: none;
+    &:focus {
+        outline: none;
+    }
+    option {
+        cursor: pointer;
+        outline: none;
+        background-color: #212121;        
+        color: #c0c4c3;
+    }
+}
+
+//MOVIES
+.movies {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__list {    
+        width: 100%;
+        max-width: 1200px;    
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;    
+        margin-top: 40px;      
+    }
+}
+
+.movie {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;        
+    margin: 15px;
+    cursor: pointer;
+    animation: opacity 1s ease-in-out;
+    &:hover {
+        box-shadow: 0px 0px 20px 0px rgba($accent,0.75);  
+    }
+    &__pic {
+        width: 200px;
+        height: 300px;
+        object-fit:cover;
+    }
+    &__overlay {
+        display: flex;
+        align-items: flex-end;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+    &__info {   
+        width: 100%;
+        display: flex;
+        flex-direction: column;   
+        padding: 10px;
+        background-color: rgba($accent,0.8);
+        color: #ffffff;
+        position: absolute;
+        transition: all .3s ease-in-out;
+        bottom: -100px;  
+        opacity: 0;      
+    }
+    &__title {
+        text-align: left;
+        font-weight: 600;
+        font-size: 20px;
+    }
+    &__date {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 400;
+    }
+    &:hover &__info {
+        opacity: 1;
+        bottom: 0;
+    }   
+    &__rating {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    } 
+}
+
+// Animated rating
+.circular-chart {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: rgba($accent,0.8);
+}
+
+.percentage {
+    text-anchor: middle;
+    fill: #ffffff;  
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.circle-bg {
+    fill: transparent;
+    stroke: transparent;
+    stroke-width: 0.5;    
+}
+  
+.circle {
+    fill: transparent;
+    stroke: #ffffff;    
+    stroke-width: 3;    
+    stroke-linecap: round;
+    animation: progress 1s ease-out forwards;
+}
+
+//Pagination
+.pages {
+    display: flex;
+    margin-top: 20px;
+    &__number {
+        font-family: $secondary;
+        font-size: 16px;
+        button {
+            cursor: pointer;
+            margin: 0 5px;
+            padding: 5px 10px;
+            color: $dark;
+            background-color: #ffffff;
+            border-radius: 2px;
+            border: none;
+            &:hover {
+                color: #ffffff;
+                background-color: $accent;
+                box-shadow: 0px 0px 7px 0px rgba($accent,0.75);  
+            }
+        }
+    }
+    &__arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        button {
+            display: flex;
+            background: transparent;
+            padding: 0;            
+            color: #ffffff;
+            &:hover {
+                color: $accent;
+                background: transparent;
+                box-shadow: unset;
+            }
+        }
+        svg {
+            height: 24px;
+        }
+    }
+}
+
+.activePage button {
+    color: #ffffff;
+    background-color: $accent;
+    box-shadow: 0px 0px 7px 0px rgba($accent,0.75);
+}
+
+@media screen and (max-width: 540px) {
+    .search-box form {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        padding: 0 15px;
+    }
+    .search-box input {
+        margin-right: 0;
+    }
+    .sort-box {
+        margin-top: 20px;
+    }    
+}

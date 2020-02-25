@@ -30,13 +30,11 @@ class App extends Component {
               </div>
           </header>
           <main className="main">
-            <div className="wrapper">
                 <Route exact path="/" component={Movies}/>
                 <Route path="/Watchlist" component={Watchlist}/>
                 <Route path="/AlreadySeen" component={AlreadySeen}/>
                 <Route path="/Top250" component={Top250}/>
                 <Route path="/Movie/:id" component={MovieDetail}/>
-            </div>
           </main>
         </HashRouter>
       </>

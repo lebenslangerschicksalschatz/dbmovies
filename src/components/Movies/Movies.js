@@ -1,8 +1,9 @@
 import React from "react";
-import { URL_SEARCH, API_KEY } from "../const"
+import { URL_SEARCH, API_KEY, URL_POPULAR } from "../const"
 import SearchArea from "../SearchArea"
 import MovieList from "./MovieList"
 import Pagination from "./Pagination"
+import Popular from "./Popular"
  
 class Movies extends React.Component {
   constructor(props) {
@@ -29,8 +30,8 @@ class Movies extends React.Component {
     const form = event.target;
     fetch(`${url}&query=${this.state.searchTerm}`)
     .then(data => data.json())
-    .then(data => {      
-      this.setState({movies: [...data.results], totalPages: data.total_pages, totalResults: data.total_results})      
+    .then(data => {
+      this.setState({movies: [...data.results], totalResults: data.total_results, totalPages: data.totalPages})      
       form.reset();
       console.log(data);
     })
@@ -50,8 +51,14 @@ class Movies extends React.Component {
   }
 
   render() {
-
-    const numberPages = this.state.totalPages;
+    console.log(this.state.movies);
+    const numberPages = () => {      
+      if (this.state.totalPages <= 5) {
+        return this.state.totalPages;
+      } else {
+        return 5
+      }      
+    }
 
     const sortedMovies = this.state.movies.sort((a,b) => {
       if(this.state.sort === "Newest") {
@@ -76,11 +83,15 @@ class Movies extends React.Component {
           handleChange={this.handleChange}
           handleSort={this.handleSort}
         />
-        <MovieList movies={sortedMovies} />
+        {
+          this.state.movies.length === 0
+          ? <Popular />
+          : <MovieList movies={sortedMovies} />
+        }
         {
           this.state.totalResults > 20 
-          ? <Pagination pages={numberPages} nextPage={this.nextPage} currentPage={this.state.currentPage} />
-          : ""
+          ? <Pagination pages={numberPages()} nextPage={this.nextPage} currentPage={this.state.currentPage} />
+          : null
         }
       </div>
     );

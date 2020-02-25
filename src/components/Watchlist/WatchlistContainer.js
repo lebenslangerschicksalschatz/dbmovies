@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 import WatchlistItem from './WatchlistItem';
 
 class WatchlistContainer extends Component {
@@ -63,7 +64,9 @@ class WatchlistContainer extends Component {
 
         const completedDisplay = (
             <div className="seen">
-              <h3 className="seen__title">Already Seen</h3>
+              <Link className="seen__title" to={`/AlreadySeen`}>
+                Already Seen
+              </Link>
               <div className="seen__list">{completedItems}</div>
             </div>
         );

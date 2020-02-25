@@ -1,0 +1,385 @@
+// Animated rating in the Watchlist Items (reused)
+.circular-chart_watchlist {
+    background-color: rgba($dark,0.8);
+}
+
+.seen-item .circular-chart_watchlist {
+    background-color: rgba($accent,0.4);
+}
+
+.percentage_watchlist { 
+    font-size: .7rem;
+    font-weight: 400;
+}
+  
+.circle_watchlist {   
+    stroke-width: 2;
+}
+
+// WATCHLIST
+.watchlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    animation: opacity 1s ease-in-out;
+    &__title {
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    &__wrap {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    &__empty {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 40px;
+        color: $accent;
+    }
+    //Watchlist Input 
+    &-input {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 450px;
+        &__control {
+            display: flex;        
+            width: 100%;
+        }
+        &__loader {
+            position: absolute;
+            bottom: 8px;
+            right: 20px;
+            svg {
+                height: 18px;
+                fill: #ffffff;
+                animation: spin 2s infinite linear;
+            }
+        }
+        &__label {
+            align-self: flex-start;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }       
+    }
+}
+
+#watchlist-suggest-input {
+    background: transparent;
+    border: none;
+    width: 100%;        
+    height: 40px;    
+    padding: 0 15px;
+    font-weight: 600;
+    color: $accent;        
+    border-bottom: 1px solid $light; 
+    transition: all .3s ease-in-out;
+    &:focus, &:hover {
+        border-bottom: 1px solid $accent;       
+    }
+}
+
+#watchlist-suggest-input::placeholder{
+    font-weight: 400;
+    color:$light;
+}
+
+//List items for Watchlist and Already Seen Lists
+.toWatch {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.seen {
+    padding: 40px 0;
+    width: 100%;
+    display: flex;    
+    flex-direction: column;
+    align-items: center;
+    &__title {
+        color: $light;
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 24px;
+        margin-bottom: 30px;
+        &:hover {
+            color: $accent;
+            animation: jello 1s infinite;
+            transform-origin: center;
+        }
+    }
+    &__list {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.list-item {
+    cursor: pointer;
+    animation: opacity 1s ease-in-out;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px;
+    &:focus {
+        outline: none;
+    }
+    &__pic {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        &:hover .list-item__detail {
+            top: 40%;
+            opacity: 1;
+        }
+    }
+    &__text {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: rgba($dark,0.8);
+        position: absolute;
+        bottom: 0;
+        h3 {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        span {
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+    &__btns {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        button {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            margin: 10px 10px 0 10px;
+            &:hover {
+                animation: pulse 1s infinite;
+            } 
+        }
+    }
+    &__detail {
+        cursor: pointer;
+        position: absolute;
+        top: 80%;
+        opacity: 0;
+        width: 100px;
+        height: 40px;        
+        background: rgba($dark,0.8);
+        transition: all .3s ease-in-out;
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                background-color: rgba($accent,0.8);
+                transition: width .4s ease-in-out;
+            }
+            &:hover::before {
+                width: 100%;
+            }
+        }
+    }    
+}
+
+.list-item.seen-item {
+    max-width: 180px;
+    img {
+        opacity: .6;
+    }
+    .list-item__text {
+        background-color: rgba($accent,0.4);
+    }   
+}
+
+//Watchlist Buttons
+.checkItem {
+    color: $light;
+    height: 35px;
+    width: 35px;
+    &:hover {
+        color: $accent;
+    }       
+}
+
+.resetItem {
+    color: rgba($accent,0.75);
+    height: 30px;
+    width: 30px;
+    &:hover {
+        color: $light;
+    }
+}
+
+.deleteItem {
+    color: $light;
+    height: 25px;
+    width: 25px;
+    &:hover {
+        color: #d4655d;
+    }
+}
+
+.seen-item .deleteItem {
+    color: rgba($accent,0.75);
+    height: 20px;
+    width: 20px;
+    &:hover {
+        color: #d4655d;
+    }
+}
+
+// SUGGESTIONS ---------------------------------------------------------------------------------------------------------------------------------------------------
+.suggestion {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-family: $secondary;
+    font-size: 14px;    
+    &__pic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;        
+        img {
+            object-fit: cover;
+            height: auto;
+            max-width: 33px;
+        }
+    }
+    &__content {
+        padding: 3px 0;
+    }
+    &__title {
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+.react-autosuggest__container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;    
+}
+
+.react-autosuggest__suggestions-container {
+    display: none;
+    color:#ffffff;
+}
+
+.react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    top: 45px;
+    border: none;
+    background-color: rgba(#030303,.7);      
+    z-index: 2;
+    width: 100%;
+}
+
+.no-suggestions{
+    cursor: pointer;
+    display: flex;
+    position: absolute;
+    top: 69px;
+    background-color: rgba(#030303,.7); 
+    padding: 10px;
+    width: 100%;
+    border: none;
+    color:#ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    &:hover {
+        background-color: rgba($accent,0.6);
+    }
+}
+
+.react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 0px 15px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+    background-color: rgba($accent,0.6);
+}
+
+.react-autosuggest__suggestion-match {
+    color: red;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 799px) {
+    .list-item {
+        max-width: unset;
+        width: 28%;        
+    }
+    .list-item.seen-item {
+        max-width: unset;
+        width: 25%;        
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .list-item {
+        width: 46%; 
+        margin: 1%;        
+    }
+    .list-item.seen-item {
+        width: 28%;  
+        margin: 1%;      
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .list-item {
+        width: 90%; 
+        margin: 10% 1%;        
+    }
+    .list-item.seen-item {
+        width: 46%;  
+        margin: 10% 1%;      
+    }
+}

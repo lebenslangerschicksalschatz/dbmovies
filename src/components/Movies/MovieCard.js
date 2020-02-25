@@ -12,7 +12,7 @@ const MovieCard = (props) => {
             <div className="movie__overlay">
                 {
                     props.voteAverage === 0
-                    ? ""
+                    ? null
                     : <div className="movie__rating">
                         <svg viewBox="0 0 36 36" className="circular-chart">                            
                             <path className="circle-bg"
@@ -34,7 +34,7 @@ const MovieCard = (props) => {
                     <h3 className="movie__title">{props.title}</h3>
                     {
                         props.release_date === undefined
-                        ? ""
+                        ? null
                         : <div className="movie__date">
                             <span>Release Date: {props.release_date.substring(0,4)}</span>                                                
                         </div>                    
