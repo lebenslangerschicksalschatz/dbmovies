@@ -31,7 +31,7 @@ class Movies extends React.Component {
     fetch(`${url}&query=${this.state.searchTerm}`)
     .then(data => data.json())
     .then(data => {
-      this.setState({movies: [...data.results], totalResults: data.total_results, totalPages: data.totalPages})      
+      this.setState({movies: [...data.results], totalResults: data.total_results, totalPages: data.total_pages})      
       form.reset();
       console.log(data);
     })
@@ -51,7 +51,7 @@ class Movies extends React.Component {
   }
 
   render() {
-    console.log(this.state.movies);
+          
     const numberPages = () => {      
       if (this.state.totalPages <= 5) {
         return this.state.totalPages;

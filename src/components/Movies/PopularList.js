@@ -19,7 +19,7 @@ const PopularList = (props) => {
                 variableWidth={true}
                 infinite={true}
                 arrows={false}
-                autoplay={false}
+                autoplay={true}
                 autoplaySpeed={3000}
                 centerPadding={0}
             >
