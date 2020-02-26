@@ -1,18 +1,5 @@
 import React, { useState } from "react";
-import { STORAGE_LIST, STORAGE_NEXTID } from "../const"
-
-function checkLocalStorage() {
-    try {
-        localStorage.setItem("watchlist_test", "test");
-        localStorage.removeItem("watchlist_test");
-        return true;
-    }
-    catch (e) {
-        return false;
-    }
-  }
-  
-const canAccessLocalStorage = checkLocalStorage();
+import { getWatchlistStorage, setWatchlistStorage } from "../movieHelpers";
 
 const Star = ({ selected = false, onClick = f => f }) => {
     
@@ -26,43 +13,15 @@ const Star = ({ selected = false, onClick = f => f }) => {
 
 };
 
-const StarRating = ({ totalStars, movieID, rating }) => {    
-
-    const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
-    // eslint-disable-next-line no-unused-vars
-    const [nextID, setNextID] = useState( getNextIDStorage() ); 
+const StarRating = ({ totalStars, movieID, rating }) => {
+    
     const [starsSelected, selectStar] = useState(rating);
 
-    function getWatchlistStorage() {
-        if(canAccessLocalStorage){
-            return JSON.parse(localStorage.getItem(STORAGE_LIST)) || [];
-        } else {            
-            return [];
-        }
-    }
-
-    function getNextIDStorage() {
-        if (canAccessLocalStorage) {
-            return parseInt(localStorage.getItem(STORAGE_NEXTID), 10) || 0;
-        } else {            
-            return 0;
-        }
-    }
-
-    function updateStorage(watchlist, nextID){
-        if (canAccessLocalStorage) {
-            localStorage.setItem(STORAGE_LIST, JSON.stringify(watchlist));
-            localStorage.setItem(STORAGE_NEXTID, nextID);
-        }
-    }
-
     function updateWatchlistItemRating(id, rating){
-        let updatedList = watchlistArray.map((item) => item.watchlistItem.id !== id ? item : {...item, rating: rating});
-        setWatchlistArray(updatedList);
-        updateStorage(updatedList, nextID);
-    }
-
-    console.log(rating);
+        let updatedList = getWatchlistStorage().map((item) => item.watchlistItem.id !== id ? item : {...item, rating: rating});
+        setWatchlistStorage(updatedList);
+        selectStar(rating);
+    }    
 
     return (
     
@@ -76,8 +35,7 @@ const StarRating = ({ totalStars, movieID, rating }) => {
                     <Star
                         key={star}
                         selected={star < starsSelected}
-                        onClick={(e) => {
-                            selectStar(star + 1)
+                        onClick={(e) => {                            
                             updateWatchlistItemRating(movieID, star + 1)
                         }}
                     />

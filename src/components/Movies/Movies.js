@@ -31,7 +31,7 @@ class Movies extends React.Component {
     fetch(`${url}&query=${this.state.searchTerm}`)
     .then(data => data.json())
     .then(data => {
-      this.setState({movies: [...data.results], totalResults: data.total_results, totalPages: data.total_pages})      
+      this.setState({movies: data.results, totalResults: data.total_results, totalPages: data.total_pages})      
       form.reset();
       console.log(data);
     })
