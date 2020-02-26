@@ -29,6 +29,7 @@ const Star = ({ selected = false, onClick = f => f }) => {
 const StarRating = ({ totalStars, movieID, rating }) => {    
 
     const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
+    // eslint-disable-next-line no-unused-vars
     const [nextID, setNextID] = useState( getNextIDStorage() ); 
     const [starsSelected, selectStar] = useState(rating);
 

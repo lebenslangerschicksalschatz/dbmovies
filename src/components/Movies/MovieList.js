@@ -10,7 +10,7 @@ const MovieList = (props) => {
             {                                
                 props.movies.map((movie) => {                     
                     return (
-                        <Link key={movie.id} to={`/movie/${movie.id}`}>                                                        
+                        <Link className="movie" key={movie.id} to={`/movie/${movie.id}`}>                                                        
                             <MovieCard                                 
                                 key={movie.id} 
                                 image={movie.poster_path}

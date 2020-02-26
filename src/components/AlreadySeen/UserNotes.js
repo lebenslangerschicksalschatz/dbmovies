@@ -33,6 +33,7 @@ function UserNotes(props) {
             setIsInputActive(false);
         } 
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [enter]);
 
     function handleChange(event) {

@@ -65,4 +65,4 @@ const PopularList = (props) => {
     )
 }
 
-export default PopularList
+export default PopularList;

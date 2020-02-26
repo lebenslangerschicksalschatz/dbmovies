@@ -59,7 +59,7 @@ class Movies extends React.Component {
         return 5
       }      
     }
-
+    // eslint-disable-next-line array-callback-return
     const sortedMovies = this.state.movies.sort((a,b) => {
       if(this.state.sort === "Newest") {
         return parseInt(b.release_date) - parseInt(a.release_date)
@@ -78,6 +78,7 @@ class Movies extends React.Component {
     return (
       <div className="movies">
         <SearchArea 
+          movies={this.state.movies}
           searchTerm={this.state.searchTerm}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}

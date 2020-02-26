@@ -19,13 +19,17 @@ const SearchArea = (props) => {
                         </svg>
                     </button>         
                 </div>
-                <select className="sort-box" defaultValue="Sort" onChange={props.handleSort}>
-                    <option disabled value="Sort">Sort</option>
-                    <option value="Newest">Newest</option>
-                    <option value="Oldest">Oldest</option>
-                    <option value="RatingAsc">By Rating Asc</option>
-                    <option value="RatingDesc">By Rating Desc</option>
-                </select>
+                {
+                    props.movies.length === 0
+                    ? null
+                    : <select className="sort-box" defaultValue="Sort" onChange={props.handleSort}>
+                        <option disabled value="Sort">Sort</option>
+                        <option value="Newest">Newest</option>
+                        <option value="Oldest">Oldest</option>
+                        <option value="RatingAsc">By Rating Asc</option>
+                        <option value="RatingDesc">By Rating Desc</option>
+                    </select>
+                }
             </form>
         </div>        
     )    

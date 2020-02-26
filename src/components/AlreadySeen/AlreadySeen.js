@@ -17,9 +17,10 @@ function checkLocalStorage() {
 
 const canAccessLocalStorage = checkLocalStorage();
 
-const AlreadySeen = ({}) => {
+const AlreadySeen = () => {
 
   const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
+  // eslint-disable-next-line no-unused-vars
   const [nextID, setNextID] = useState( getNextIDStorage() );
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -74,7 +75,7 @@ const AlreadySeen = ({}) => {
   function handleChange(e) {
     setSearchTerm(e.target.value);
   }
-
+  // eslint-disable-next-line array-callback-return
   let FilteredSeenlistArray = seenlistArray.filter((item) => {
     if (searchTerm !== null) {
       return item.watchlistItem.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -144,7 +145,7 @@ const AlreadySeen = ({}) => {
                       <div className="seenlist-item__text">
                         <h3 className="seenlist-item__title">{item.watchlistItem.title}</h3>
                         {
-                            item.watchlistItem.release_date !== undefined
+                            item.watchlistItem.release_date !== undefined || item.watchlistItem.release_date !== ""
                             ? <span className="seenlist-item__date">{item.watchlistItem.release_date.substring(0,4)}</span>
                             : null
                         }

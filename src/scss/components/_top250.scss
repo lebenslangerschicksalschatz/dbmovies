@@ -1,0 +1,141 @@
+// Animated rating in the Seenlist Items (reused)
+.circular-chart.circular-chart_topRated {
+    width: 60px;
+    height: 60px; 
+    background-color: rgba($dark,0.8);
+    transition: all .3s ease-in-out;
+}
+
+.percentage.percentage_topRated { 
+    font-size: .7rem;
+    font-weight: 400;
+}
+
+.circle.circle_topRated {      
+    stroke-width: 2;
+}
+
+.topRated {
+    width: 100%;
+    .wrapper {
+        flex-direction: column;
+        padding: 0;
+    }
+    &__title {
+        font-family: $primary;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 34px;
+        margin-bottom: 30px;
+    }
+    &__list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }    
+}
+
+.topRated-item {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    width: 48%;
+    margin: 1%;
+    &:hover .circular-chart.circular-chart_topRated {
+        background-color: rgba($accent, 0.8);
+    }    
+    &:hover &__detail {
+        top: 40%;
+        opacity: 1;
+    }
+    &__title {
+        display: flex;
+        padding: 10px 20px;
+        font-size: 20px;
+        font-weight: 400;
+        max-width: 80%;
+        position: absolute;
+        z-index: 1;
+        top: 20px;
+        left: 0;
+        background-color: rgba($dark,0.8);
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 100%;
+            background-color: rgba($accent,0.8);
+            transition: width .4s ease-in-out;
+        }
+    }
+    &:hover .topRated-item__title::before {
+        width: 100%;
+    }
+    &__detail {
+        font-size: 18px;
+        text-transform: uppercase;
+        cursor: pointer;
+        position: absolute;
+        top: 100%;
+        opacity: 0;
+        width: 120px;
+        height: 45px;        
+        background: rgba($dark,0.8);
+        transition: all .3s ease-in-out;
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            &::before {
+                content: "";
+                display: block;
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                background-color: rgba($accent,0.8);
+                transition: width .4s ease-in-out;
+            }
+            &:hover::before {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .topRated-item {
+        width: 96%;
+    }
+}
+
+@media screen and (max-width: 525px) {
+    .circular-chart.circular-chart_topRated {
+        width: 45px;
+        height: 45px;
+    }
+
+    .topRated-item__title {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+    .topRated-item__detail {
+        font-size: 14px;
+        height: 35px;
+        width: 90px;
+    }
+    .topRated-item:hover .topRated-item__detail {
+        top: 50%;
+    }
+}

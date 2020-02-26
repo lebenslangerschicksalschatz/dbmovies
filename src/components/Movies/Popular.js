@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {URL_POPULAR, API_KEY, URL_BACKDROP, DEFAULT_BACKDROP } from "../const"
+import {URL_POPULAR, API_KEY } from "../const"
 import PopularList from "./PopularList"
 
-const Popular = ({}) => {
+const Popular = () => {
     useEffect (() => {
-        fetchPopular();
+        fetchPopular();        
     }, []);
 
     const [popular, setPopular] = useState({});
@@ -20,11 +20,11 @@ const Popular = ({}) => {
     }
 
     if (isLoading) {
-        return (<h1>Loading..</h1>)
+        return (<h2 className="isLoading">Loading..</h2>)
 
     } else {
         return (
-            <>                
+            <>
                 <PopularList movies={popular}/>                
             </>
         ) 

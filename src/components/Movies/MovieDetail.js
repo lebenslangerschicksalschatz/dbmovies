@@ -18,13 +18,14 @@ const MovieDetail = ({ match }) => {
     useEffect (() => {
         fetchItem();
         fetchTrailer();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [item, setItem] = useState({});
     const [trailer, setTrailer] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchItem = async () => {
+    async function fetchItem() {
         let url = URL_DETAIL + match.params.id + API_KEY
         setIsLoading(true);
         const fetchItem = await fetch(`${url}`);
@@ -34,7 +35,7 @@ const MovieDetail = ({ match }) => {
         setIsLoading(false);
     }
 
-    const fetchTrailer = async () => {
+    async function fetchTrailer() {
         let url = URL_DETAIL + match.params.id + URL_VIDEO + API_KEY
         setIsLoading(true);
         const fetchTrailer = await fetch(`${url}`);
@@ -147,11 +148,11 @@ const MovieDetail = ({ match }) => {
               Unable to access LocalStorage.
         </div>)
     } else if (isLoading) {
-        return (<h1>Loading..</h1>)
+        return (<h2 className="isLoading">Loading..</h2>)
 
     } else {
         return (
-            <>            
+            <>     
             {
                 item.backdrop_path === null 
                 ?<img className="backdrop" src={DEFAULT_BACKDROP} alt="Background"/> 
@@ -162,7 +163,7 @@ const MovieDetail = ({ match }) => {
                     <h3 className="movie-d__title">
                         {item.title}
                         {
-                            item.release_date === undefined
+                            item.release_date === undefined || item.release_date === ""
                             ? null
                             : <span>({item.release_date.substring(0,4)})</span>
                         }

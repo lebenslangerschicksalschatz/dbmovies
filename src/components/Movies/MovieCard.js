@@ -3,7 +3,7 @@ import { URL_IMG, IMG_SIZE_SMALL, DEFAULT_POSTER } from "../const"
 
 const MovieCard = (props) => {
     return (
-        <div className="movie">
+        <>
             {
                 props.image === null 
                 ? <img className="movie__pic" src={DEFAULT_POSTER} alt="Movie Poster" /> 
@@ -33,7 +33,7 @@ const MovieCard = (props) => {
                 <div className="movie__info">
                     <h3 className="movie__title">{props.title}</h3>
                     {
-                        props.release_date === undefined
+                        props.release_date === undefined || props.release_date === ""
                         ? null
                         : <div className="movie__date">
                             <span>Release Date: {props.release_date.substring(0,4)}</span>                                                
@@ -41,7 +41,7 @@ const MovieCard = (props) => {
                     }                    
                 </div>
             </div>
-        </div>
+        </>
     )
 
 }

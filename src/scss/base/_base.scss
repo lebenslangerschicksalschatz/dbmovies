@@ -18,6 +18,14 @@ img {
     align-items: center;
 }
 
+.isLoading {
+  font-family: $secondary;
+  font-size: 34px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 100px auto;
+}
+
 button:focus, input:focus, a:focus {
     outline: none;
 }
