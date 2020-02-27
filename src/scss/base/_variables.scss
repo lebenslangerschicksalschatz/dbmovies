@@ -118,3 +118,30 @@ $secondary: 'Lato', sans-serif;
       transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
     }
 }
+
+@keyframes appear {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    0% {
+      transform: translateX(-5%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes shrink {
+    0% {
+      width: 95%;
+    }
+    100% {
+      width: 90%;
+    }
+}

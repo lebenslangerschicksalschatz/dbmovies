@@ -1,0 +1,37 @@
+.toWatchlist {
+    color: $light;
+    height: 40px;
+    width: 40px;
+    &:hover {
+        color: $accent;
+    }
+}
+
+.fromWatchlist {
+    color: $accent;
+    height: 40px;
+    width: 40px;
+    animation: bounceIn 1s linear;
+    &:hover {
+        color: $light;
+    }
+}
+
+.toSeen {
+    color: $light;
+    height: 40px;
+    width: 40px;
+    &:hover {
+        color: $accent;
+    }
+}
+
+.fromSeen {
+    color: $accent;
+    height: 40px;
+    width: 40px;
+    animation: bounceIn 1s linear;
+    &:hover {
+        color: $light;
+    }
+}

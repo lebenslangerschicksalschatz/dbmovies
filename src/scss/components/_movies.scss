@@ -119,6 +119,7 @@
     width: 18%;
     cursor: pointer;
     animation: opacity 1s ease-in-out;
+    transition: all .4s;
     &:hover {
         box-shadow: 0px 0px 20px 0px rgba($accent,0.75);  
     }
@@ -173,6 +174,16 @@
         right: 10px;
     } 
 }
+
+.movies__list:hover .movie:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.movies__list:hover .movie {
+    opacity: .3;
+}
+
 
 // Animated rating
 .circular-chart {
