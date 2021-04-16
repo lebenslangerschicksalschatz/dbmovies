@@ -3,7 +3,7 @@ import '../scss/App.scss';
 import {
   Route,
   NavLink,
-  BrowserRouter as Router
+  HashRouter as Router
 } from "react-router-dom";
 import Movies from "./Movies/Movies";
 import Watchlist from "./Watchlist/Watchlist";
