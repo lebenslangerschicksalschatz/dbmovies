@@ -3,7 +3,7 @@ import '../scss/App.scss';
 import {
   Route,
   NavLink,
-  HashRouter
+  BrowserRouter as Router
 } from "react-router-dom";
 import Movies from "./Movies/Movies";
 import Watchlist from "./Watchlist/Watchlist";
@@ -23,7 +23,7 @@ class App extends Component {
     this.setState({menuOpen:!this.state.menuOpen});
     e.stopPropagation();
   }
-  
+
   handleLinkClick(e) {
     this.setState({menuOpen: false});
     e.stopPropagation();
@@ -32,10 +32,14 @@ class App extends Component {
   render () {
     return (
       <>
-        <HashRouter>
+        <Router>
           <header className="header">
               <div className="wrapper">
-                  <div className="header__logo"><NavLink exact to="/"><img src="./img/main_logo.png" alt="Main Logo"/></NavLink></div>                  
+                  <div className="header__logo">
+                    <NavLink exact to="/">
+                      <img src={`${process.env.PUBLIC_URL}/img/main_logo.png`} alt="Main Logo"/>
+                    </NavLink>
+                  </div>
                   <nav className="nav">
                       <ul className="nav__list">
                           <li className="nav__item"><NavLink exact to="/">Home</NavLink></li>
@@ -66,7 +70,7 @@ class App extends Component {
                 <Route path="/Top250" component={Top250}/>
                 <Route path="/Movie/:id" component={MovieDetail}/>
           </main>
-        </HashRouter>
+        </Router>
       </>
     );
   }
