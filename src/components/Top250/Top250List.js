@@ -16,26 +16,24 @@ function checkLocalStorage() {
 const canAccessLocalStorage = checkLocalStorage();
 
 const Top250List = (props) => {
-
     const movies = props.movies;
-    console.log(movies);
 
-    //LOCAL STORAGE      
+    //LOCAL STORAGE
     const [watchlistArray, setWatchlistArray] = useState( getWatchlistStorage() );
-    const [nextID, setNextID] = useState( getNextIDStorage() );    
+    const [nextID, setNextID] = useState( getNextIDStorage() );
 
     function getWatchlistStorage() {
         if(canAccessLocalStorage){
             return JSON.parse(localStorage.getItem(STORAGE_LIST)) || [];
-        } else {            
+        } else {
             return [];
         }
     }
-    
+
     function getNextIDStorage() {
         if (canAccessLocalStorage) {
             return parseInt(localStorage.getItem(STORAGE_NEXTID), 10) || 0;
-        } else {            
+        } else {
             return 0;
         }
     }
@@ -48,7 +46,7 @@ const Top250List = (props) => {
     }
 
     function checkDuplicateID(id){
-        return watchlistArray.some((item) => item.watchlistItem.id === id);     
+        return watchlistArray.some((item) => item.watchlistItem.id === id);
     }
 
     function checkIfSeen(id){
@@ -56,16 +54,16 @@ const Top250List = (props) => {
         return foundList.some((item) => item.completed === true)
     }
 
-    function addWatchlistItem(watchlistItem) { 
-        let updatedID = Number(nextID) + 1;       
-        if (!checkDuplicateID(watchlistItem.id)) {            
+    function addWatchlistItem(watchlistItem) {
+        let updatedID = Number(nextID) + 1;
+        if (!checkDuplicateID(watchlistItem.id)) {
             let newItem = [{
-                id: updatedID, 
+                id: updatedID,
                 watchlistItem: watchlistItem,
                 completed: false,
                 rating: 0
             }];
-          let updatedList = newItem.concat(watchlistArray);          
+          let updatedList = newItem.concat(watchlistArray);
           setWatchlistArray(updatedList);
           setNextID(updatedID);
           updateStorage(updatedList, updatedID);
@@ -78,13 +76,13 @@ const Top250List = (props) => {
         let updatedID = Number(nextID) + 1;
         if (!checkDuplicateID(watchlistItem.id)) {
             let newItem = [{
-                id: updatedID, 
+                id: updatedID,
                 watchlistItem: watchlistItem,
                 completed: true,
                 rating: 0
             }];
-    
-            let updatedList = newItem.concat(watchlistArray);          
+
+            let updatedList = newItem.concat(watchlistArray);
             setWatchlistArray(updatedList);
             setNextID(updatedID);
             updateStorage(updatedList, updatedID);
@@ -94,8 +92,8 @@ const Top250List = (props) => {
     }
 
     function removeWatchlistItem(id) {
-        let updatedList = watchlistArray.filter((item) => item.watchlistItem.id !== id);        
-        setWatchlistArray(updatedList);        
+        let updatedList = watchlistArray.filter((item) => item.watchlistItem.id !== id);
+        setWatchlistArray(updatedList);
         updateStorage(updatedList, nextID);
     }
 
@@ -113,16 +111,16 @@ const Top250List = (props) => {
                 return (
                     <div key={movie.id} className="topRated-item">
                         {
-                            movie.backdrop_path === null 
-                            ?<img src={DEFAULT_BACKDROP} alt="Background"/> 
-                            :<img src={URL_BACKDROP+movie.backdrop_path} alt="Background"/> 
+                            movie.backdrop_path === null
+                            ?<img src={DEFAULT_BACKDROP} alt="Background"/>
+                            :<img src={URL_BACKDROP+movie.backdrop_path} alt="Background"/>
                         }
                         <h3 className="topRated-item__title">{movies.indexOf(movie) + 1}. {movie.title}</h3>
                         {
                             movie.vote_average === 0
                             ? null
                             : <div className="movie__rating movie__rating_topRated">
-                                <svg viewBox="0 0 36 36" className="circular-chart circular-chart_topRated">                            
+                                <svg viewBox="0 0 36 36" className="circular-chart circular-chart_topRated">
                                     <path className="circle-bg circle-bg_topRated"
                                     d="M18 2.0845
                                         a 15.9155 15.9155 0 0 1 0 31.831
@@ -138,7 +136,7 @@ const Top250List = (props) => {
                                 </svg>
                             </div>
                         }
-                        <div className="topRated__btns">                        
+                        <div className="topRated__btns">
                         {
                             checkDuplicateID(movie.id) && !checkIfSeen(movie.id)
                             ? (<button className="fromWatchlist" onClick={(e) => removeWatchlistItem(movie.id)} title="Remove from the watchlist">
@@ -150,7 +148,7 @@ const Top250List = (props) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="heart" role="img" viewBox="0 0 512 512">
                                     <path fill="currentColor" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/>
                                 </svg>
-                            </button>)                            
+                            </button>)
                         }
                         {
                             checkIfSeen(movie.id)

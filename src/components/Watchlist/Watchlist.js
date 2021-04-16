@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import WatchlistInput from './WatchlistInput';
 import WatchlistContainer from './WatchlistContainer';
-import { getWatchlistStorage, setWatchlistStorage } from "../movieHelpers";
+import {getWatchlistStorage, setWatchlistStorage} from "../movieHelpers";
 import LocalStorage from "../../localStorage";
 
 function Watchlist () {
@@ -26,13 +26,19 @@ function Watchlist () {
   }
 
   function removeWatchlistItem(id) {
-    let updatedList = watchlistArray.filter((item) => item.id !== id);
+    let updatedList = watchlistArray.filter((item) => item.watchlistItem.id !== id);
+
     setWatchlistStorage(updatedList);
     setWatchlistArray(updatedList);
   }
 
   function updateWatchlistItemStatus(id, status){
-    let updatedList = watchlistArray.map((item) => item.id !== id ? item : {...item, completed:status});
+    let updatedList = watchlistArray.map((item) =>
+      item.watchlistItem.id !== id
+        ? item
+        : {...item, completed:status}
+    );
+
     setWatchlistStorage(updatedList);
     setWatchlistArray(updatedList);
   }
@@ -40,22 +46,21 @@ function Watchlist () {
   return (
     <div className="watchlist">
       <h2 className="watchlist__title">watchlist</h2>
-      <WatchlistInput 
+      <WatchlistInput
         addWatchlistItem={(watchlistItem) => addWatchlistItem(watchlistItem)}
       />
-      { LocalStorage.checkLocalStorage() 
+      {LocalStorage.checkLocalStorage()
         ? <WatchlistContainer
           listItems={watchlistArray}
-          removeWatchlistItem={(id) => removeWatchlistItem(id)}
-          updateWatchlistItemStatus={(id, status) => updateWatchlistItemStatus(id, status)}
+          handleClose={id => removeWatchlistItem(id)}
+          handleReset={(id, status) => updateWatchlistItemStatus(id, status)}
+          handleComplete={(id, status) => updateWatchlistItemStatus(id, status)}
         />
-        : <div id="storageError">
-            Unable to access LocalStorage.
-          </div> 
-      }              
+        : <div id="storageError">Unable to access LocalStorage.</div>
+      }
     </div>
   )
 
 }
- 
+
 export default Watchlist;

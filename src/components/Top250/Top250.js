@@ -1,88 +1,66 @@
-import React, { Component } from "react";
+import React, {useState, useEffect} from "react";
 import debounce from "lodash.debounce";
 import {URL_TOP250, API_KEY} from "../const";
 import Top250List from "./Top250List";
 
-class Top250 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasMore: true,
-      isLoading: false,
-      movies: [],
-      currentPage: 0
-    };
+const Top250 = () => {
+  const baseURL = URL_TOP250 + API_KEY;
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
-    window.onscroll = debounce(() => {
-      const {
-        loadMore,
-        state: {
-          isLoading,
-          hasMore,
-        },
-      } = this;
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
-      if (isLoading || !hasMore) return;
-      if (
-        window.innerHeight + document.documentElement.scrollTop
-        === document.documentElement.offsetHeight
-      ) {
-        loadMore();
-      }
-    }, 250);
+  window.onscroll = debounce(() => {
+    const scrolledHeight = window.innerHeight + document.documentElement.scrollTop;
+    const docHeight = document.documentElement.offsetHeight;
+
+    if (loading || !hasMore) return;
+
+    if (scrolledHeight + 50 >= docHeight || scrolledHeight - 50 >= docHeight) {
+      loadMore();
+    }
+  }, 50);
+
+  async function fetchMovies() {
+    setLoading(true);
+
+    const data = await fetch(baseURL).then(res => res.json());
+
+    setMovies(data.results);
+    setCurrentPage(data.page);
+
+    setLoading(false);
   }
 
-async componentDidMount() {
-    let url = URL_TOP250 + API_KEY; 
-    fetch(url)
-    .then(data => data.json())
-    .then(data => {
-        this.setState({ movies: data.results, currentPage: data.page })
-    })    
-}
+  async function loadMore() {
+    let nextPage = currentPage + 1;
+    let url = `${baseURL}&page=${nextPage}`;
 
-loadMore = () => {
-    let nextPage = this.state.currentPage + 1;
-    let url = `${URL_TOP250 + API_KEY}&page=${nextPage}`;    
-    this.setState({ isLoading: true }, () => {
-        fetch(url)
-        .then(data => data.json())
-        .then(data => {
-            const nextMovies = data.results
-            this.setState({
-                currentPage: data.page,
-                hasMore: (this.state.movies.length < 250),
-                isLoading: false,
-                movies: [
-                ...this.state.movies,
-                ...nextMovies,
-                ],
-            });
-        });
-    })
-};
+    setLoading(true);
 
-render() {
-    const {
-      hasMore,
-      isLoading
-    } = this.state;
+    const data = await fetch(url).then(res => res.json());
 
-    return (
-      <div className="topRated">
-          <div className="wrapper">
-            <h2 className="topRated__title">Top 250 movies</h2>
-            <Top250List movies={this.state.movies}/>
-            {isLoading &&
-            <div>Loading...</div>
-            }
-            {!hasMore &&
-            <div>You did it! You reached the end!</div>
-            }
-          </div>
-      </div>
-    );
-  }
+    setMovies([...movies, ... data.results]);
+    setCurrentPage(data.page);
+    setHasMore(movies.length < 250);
+
+    setLoading(false);
+  };
+
+  return (
+    <div className="topRated">
+        <div className="wrapper">
+          <h2 className="topRated__title">Top 250 movies</h2>
+          <Top250List movies={movies}/>
+          {loading && <div>Loading...</div>}
+          {!hasMore &&<div>You did it! You reached the end!</div>}
+        </div>
+    </div>
+  );
 }
 
 export default Top250;
