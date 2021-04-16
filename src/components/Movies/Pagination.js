@@ -4,12 +4,12 @@ const Pagination = (props) => {
     const pageLinks = [];
 
     for(let i = 1; i <= props.pages; i++) {
-        let activePage = props.currentPage === i ? 'activePage' : '';
+        let activePage = props.current === i ? 'activePage' : '';
 
         pageLinks.push(
-            <li 
-                className={`pages__number ${activePage}`} 
-                key={i} 
+            <li
+                className={`pages__number ${activePage}`}
+                key={i}
                 onClick={() => props.nextPage(i)}
             >
                 <button>{i}</button>
@@ -18,8 +18,8 @@ const Pagination = (props) => {
 
     return (
         <ul className="pages">
-            { 
-                props.currentPage > 1 
+            {
+                props.currentPage > 1
                 ? <li className={`pages__number pages__arrow`} onClick={() => props.nextPage(props.currentPage - 1)}>
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-left" role="img" viewBox="0 0 448 512">
@@ -30,8 +30,8 @@ const Pagination = (props) => {
                 : ""
             }
             { pageLinks }
-            { 
-                props.currentPage < props.pages 
+            {
+                props.currentPage < props.pages
                 ? <li className={`pages__number pages__arrow`} onClick={() => props.nextPage(props.currentPage + 1)}>
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-double-right" role="img" viewBox="0 0 448 512">
