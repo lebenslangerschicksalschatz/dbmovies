@@ -1,6 +1,6 @@
 # DB Movies
 
-Simple static project based public on DB Movies API
+Simple static project based on public DB Movies API
 
 ## Available Scripts:
 
